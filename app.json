@@ -1,0 +1,48 @@
+{
+    "name": "Telegram Movies Searcher Bot",
+    "description": "Movies Searching Bot for Telegram",
+    "keywords": [
+        "telegram",
+        "short link",
+        "Acoount Gen Bot",
+        "Telegram Acoount Gen Bot"
+    ],
+    "website": "https://github.com/XSmitX/MoviesSearcherPAID",
+    "repository": "https://github.com/XSmitX/MoviesSearcherPAID",
+    "logo": "https://ibb.co/kMVxrCj",
+    "env": {
+        "API_HASH": {
+            "description": "Your API Hash from my.telegram.org",
+            "required": true
+        },
+        "API_ID": {
+            "description": "Your API ID from my.telegram.org",
+            "required": true
+        },
+        "ADMIN": {
+            "description": "Admin ids, Get using @my_id_bot [You can multiple for example: 1112223334, 667788990, 8897765454]",
+            "required": true
+        },
+        "BOT_TOKEN": {
+            "description": "Get it from @botfather",
+            "required": true
+        },
+        "DOMAIN": {
+            "description": "Your Domain Name",
+            "required": true
+        }
+    },
+    "addons": [],
+    "buildpacks": [
+        {
+            "url": "heroku/python"
+        }
+    ],
+    "formation": {
+        "worker": {
+            "quantity": 1,
+            "size": "standard-1x"
+        }
+    },
+    "stack": "heroku-22"
+}
