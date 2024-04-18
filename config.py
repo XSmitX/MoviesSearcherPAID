@@ -6,3 +6,4 @@ BOT_TOKEN = environ.get('BOT_TOKEN', '')
 ADMIN = environ.get('ADMIN', '') #seperate by id # Replace this with your group chat ID\
 
 DOMAIN = environ.get('DOMAIN', '') 
+DOMAIN_URL_POST = environ.get('DOMAIN_URL_POST', '')
