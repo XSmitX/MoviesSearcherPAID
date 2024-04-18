@@ -3,8 +3,8 @@ from pyrogram.types import InlineKeyboardButton as ikb, InlineKeyboardMarkup as 
 import requests
 from bs4 import BeautifulSoup as bs
 import asyncio
-from config import API_HASH,API_ID,BOT_TOKEN,ADMIN,DOMAIN
-bot = Client("lientBot2",
+from config import API_HASH,API_ID,BOT_TOKEN,DOMAIN,DOMAIN_URL_POST,ADMIN
+bot = Client("lientBdsot2",
              bot_token = BOT_TOKEN,
              api_id= API_ID,
              api_hash= API_HASH)
@@ -50,7 +50,13 @@ async def LInkTOPost(bot,message):
             link3 = soup2.find('div', class_="poster")
             link2_1 =  soup2.find('div', class_='data')
             MovieName = link2_1.h1.text
-            MovieImage = link3.img['data-src']
+            if link3:
+                img_tag = link3.find('img')
+                if img_tag:
+                    src_value = img_tag.get('src')
+                    print(src_value)
+            MovieImage = src_value
+
 
             try:
 
@@ -87,7 +93,7 @@ async def LInkTOPost(bot,message):
                 button = ikb("📥  Ｄｏｗｎｌｏａｄ Ｎｏｗ  📥", url= LinkOne)
                 reply_markup = ikm([[button]])
                 await searchMSG.delete()
-                await bot.send_photo(-1002006956019,MovieImage,caption=f"<i><b>{MovieName}\n\n✔️ ᴀᴅᴅᴇᴅ ᴏɴ CinemaLuxe.buzz</b>\n\n🎞 Qᴜᴀʟɪᴛʏ ᴀᴅᴅᴇᴅ - {quality_str}\n🎶 ᴀᴜᴅɪᴏ ᴀᴅᴅᴇᴅ - {audio_str}\n\nᴡᴇʙꜱɪᴛᴇ ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ\nᴊᴏɪɴ ɴᴏᴡ  @cinemaluxerequest \n\n⭐️ᴊᴏɪɴ ᴍᴀɪɴ ᴄʜᴀɴɴᴇʟ - @cinemaluxeupdates </b></i>",reply_markup=reply_markup)
+                await bot.send_photo(-1002006956019,MovieImage,caption=f"<i><b>{MovieName}\n\n✔️ ᴀᴅᴅᴇᴅ ᴏɴ {DOMAIN_URL_POST}</b>\n\n🎞 Qᴜᴀʟɪᴛʏ ᴀᴅᴅᴇᴅ - {quality_str}\n🎶 ᴀᴜᴅɪᴏ ᴀᴅᴅᴇᴅ - {audio_str}\n\nᴡᴇʙꜱɪᴛᴇ ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ\nᴊᴏɪɴ ɴᴏᴡ  @cinemaluxerequest \n\n⭐️ᴊᴏɪɴ ᴍᴀɪɴ ᴄʜᴀɴɴᴇʟ - @cinemaluxeupdates </b></i>",reply_markup=reply_markup)
                 CreatedPost = await bot.send_message(message.chat.id,"<i><b>Post Created Successfully..</b></i>")
                 await asyncio.sleep(5)
                 await CreatedPost.delete()
@@ -96,7 +102,7 @@ async def LInkTOPost(bot,message):
                 await searchMSG.delete()
                 button = ikb("📥  Ｄｏｗｎｌｏａｄ Ｎｏｗ  📥", url= LinkOne)
                 reply_markup = ikm([[button]])
-                await bot.send_photo(-1002006956019,MovieImage,caption=f"<i><b>{MovieName}\n\n✔️ ᴀᴅᴅᴇᴅ ᴏɴ CinemaLuxe.buzz</b>\n\nᴡᴇʙꜱɪᴛᴇ ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ\nᴊᴏɪɴ ɴᴏᴡ  @cinemaluxerequest \n\n⭐️ᴊᴏɪɴ ᴍᴀɪɴ ᴄʜᴀɴɴᴇʟ - @cinemaluxeupdates </b></i>",reply_markup=reply_markup)
+                await bot.send_photo(-1002006956019,MovieImage,caption=f"<i><b>{MovieName}\n\n✔️ ᴀᴅᴅᴇᴅ ᴏɴ {DOMAIN_URL_POST}</b>\n\nᴡᴇʙꜱɪᴛᴇ ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ\nᴊᴏɪɴ ɴᴏᴡ  @cinemaluxerequest \n\n⭐️ᴊᴏɪɴ ᴍᴀɪɴ ᴄʜᴀɴɴᴇʟ - @cinemaluxeupdates </b></i>",reply_markup=reply_markup)
                 CreatedPost=await bot.send_message(message.chat.id,"<i><b>Post Created Successfully..</b></i>")
                 await asyncio.sleep(5)
                 await CreatedPost.delete()
@@ -127,15 +133,23 @@ async def Movie(bot, message):
                     MovieLink = i.a['href']
             except:
                 await searchMSG.delete()
-
+            print(MovieLink)
             r2 = requests.get(MovieLink)
             soup2 = bs(r2.text, 'html.parser')
             link3 = soup2.find('div', class_="poster")
-            link2_1 =  soup2.find('div', class_='data')
-            MovieName = link2_1.h1.text
-            MovieImage = link3.img['data-src']
+            print(link3)
+            if link3:
+                img_tag = link3.find('img')
+                if img_tag:
+                    src_value = img_tag.get('src')
+                    print(src_value)
+            MovieImage = src_value
             print(MovieImage)
+            link2_1 =  soup2.find('div', class_='data')
+            #print(link2_1.h1.text)
+            MovieName = link2_1.h1.text
             print(MovieName)
+            
             try:
 
                 link4 = soup2.find('div', class_='fix-table')
@@ -171,12 +185,12 @@ async def Movie(bot, message):
                 button = ikb("📥  Ｄｏｗｎｌｏａｄ Ｎｏｗ  📥", url= MovieLink)
                 reply_markup = ikm([[button]])
                 await searchMSG.delete()
-                await bot.send_photo(message.chat.id,MovieImage,caption=f"<i><b>{MovieName}\n\n✔️ ᴀᴅᴅᴇᴅ ᴏɴ CinemaLuxe.buzz</b>\n\n🎞 Qᴜᴀʟɪᴛʏ ᴀᴅᴅᴇᴅ - {quality_str}\n🎶 ᴀᴜᴅɪᴏ ᴀᴅᴅᴇᴅ - {audio_str}\n\nᴡᴇʙꜱɪᴛᴇ ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ\nᴊᴏɪɴ ɴᴏᴡ  @cinemaluxerequest \n\n⭐️ᴊᴏɪɴ ᴍᴀɪɴ ᴄʜᴀɴɴᴇʟ - @cinemaluxeupdates </b></i>",reply_markup=reply_markup)
+                await bot.send_photo(message.chat.id,MovieImage,caption=f"<i><b>{MovieName}\n\n✔️ ᴀᴅᴅᴇᴅ ᴏɴ {DOMAIN_URL_POST}</b>\n\n🎞 Qᴜᴀʟɪᴛʏ ᴀᴅᴅᴇᴅ - {quality_str}\n🎶 ᴀᴜᴅɪᴏ ᴀᴅᴅᴇᴅ - {audio_str}\n\nᴡᴇʙꜱɪᴛᴇ ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ\nᴊᴏɪɴ ɴᴏᴡ  @cinemaluxerequest \n\n⭐️ᴊᴏɪɴ ᴍᴀɪɴ ᴄʜᴀɴɴᴇʟ - @cinemaluxeupdates </b></i>",reply_markup=reply_markup)
             except:
                 await searchMSG.delete()
                 button = ikb("📥  Ｄｏｗｎｌｏａｄ Ｎｏｗ  📥", url= MovieLink)
                 reply_markup = ikm([[button]])
-                await bot.send_photo(message.chat.id,MovieImage,caption=f"<i><b>{MovieName}\n\n✔️ ᴀᴅᴅᴇᴅ ᴏɴ CinemaLuxe.buzz</b>\n\nᴡᴇʙꜱɪᴛᴇ ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ\nᴊᴏɪɴ ɴᴏᴡ  @cinemaluxerequest \n\n⭐️ᴊᴏɪɴ ᴍᴀɪɴ ᴄʜᴀɴɴᴇʟ - @cinemaluxeupdates </b></i>",reply_markup=reply_markup) 
+                await bot.send_photo(message.chat.id,MovieImage,caption=f"<i><b>{MovieName}\n\n✔️ ᴀᴅᴅᴇᴅ ᴏɴ {DOMAIN_URL_POST}</b>\n\nᴡᴇʙꜱɪᴛᴇ ꜱᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ\nᴊᴏɪɴ ɴᴏᴡ  @cinemaluxerequest \n\n⭐️ᴊᴏɪɴ ᴍᴀɪɴ ᴄʜᴀɴɴᴇʟ - @cinemaluxeupdates </b></i>",reply_markup=reply_markup) 
         except:
             await searchMSG.delete()
             MvNotFound = await message.reply("<b>Not Found On Website..</b>")
