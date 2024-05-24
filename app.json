@@ -26,14 +26,6 @@
         "BOT_TOKEN": {
             "description": "Get it from @botfather",
             "required": true
-        },
-        "DOMAIN": {
-            "description": "Your Domain Name",
-            "required": true
-        },
-        "DOMAIN_URL_POST": {
-            "description": "DOMAIN NAME in SEARCH AND POST WITHOUT S=",
-            "required": true
         }
     },
     "addons": [],
