@@ -5,15 +5,15 @@ from bs4 import BeautifulSoup as bs
 import asyncio
 from pyrogram.enums import ChatMemberStatus
 import pymongo
-from config import *
-ADMINS = [int(admin_id) for admin_id in ADMIN.split(',')]
+#from config import 
+ADMINS = [1164156857, 6121699672]
 
 #-------------------------------------------------------------------------------------------------------------------
 bot = Client(
     "Tegfsz",
-    bot_token=BOT_TOKEN,
-    api_id=API_ID,
-    api_hash=API_HASH
+    bot_token="7192994294:AAFqOrwQ8p2zLs2_kvuaLHXSk5VEEZIN9z8",
+    api_id=27663778,
+    api_hash="2e751726850d421b67021e0edf85cbc6"
 )
 
 #-------------------------------------------------------------------------------------------------------------------
