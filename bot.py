@@ -65,12 +65,20 @@ def check_joined():
             return False
     return filters.create(func)
 
-@bot.on_message(filters.command("start") & check_joined())
+@bot.on_message(filters.command("start") & filters.private)
 async def start(bot, message):
     usrid = message.from_user.id
-    await message.reply(text=f"<b><i>Welcome {message.from_user.first_name} 👋 ,\nThis Bot Is Owned by ❤️CinemaLuxe❤️.\n\nType Your Movie,TV Show and Anime Name.⬇️</i></b>")
+    chat_id = premium_channel_id
+    try:
+        await bot.get_chat_member(chat_id, usrid)
+    except:
+        await bot.send_message(message.chat.id, "<b><i>To use this bot, Please join our channel.\nJoin From The Link Below 👇</i></b>", reply_markup=ikm([[ikb("✅ Join Channel", url="https://t.me/cinemaluxeupdates")]]))
+        return
+    print(usrid)
+    await message.reply(text=f"Welcome {message.from_user.first_name} 👋 ,\nThis Bot Is Owned by ❤️CinemaLuxe❤️.\n\nType Your Movie,TV Show and Anime Name.⬇️")
     if idstoring.find_one({"idd": usrid}) == None:
         idstoring.insert_one({"idd": message.from_user.id, "name": message.from_user.first_name})
+    
     
     # Above code is for find user id in database.
     # if Not found then it will add user in the database.
@@ -191,14 +199,18 @@ async def LInkTOPost(bot, message):
 async def Movie(bot, message):
     dc = domain.find_one({})
     user_id = message.from_user.id
+    print(user_id)
     chat_id = premium_channel_id
     try:
         await bot.get_chat_member(chat_id, user_id)
-    except:
-        if message.text.startswith("/start"):
+        if idstoring.find_one({"idd": message.from_user.id}) == None:
+            await bot.send_message(message.chat.id, "<b>Start me in DM, not in the group.:\nhttps://t.me/CinemaLuxe_Search_bot.</b>")
             return
-        await bot.send_message(message.chat.id, "<b>You haven't joined the Channel \nJoin by sending /start command in my DM.</b>")
+        
+    except:
+        await bot.send_message(message.chat.id, "<b>Start me in DM, not in the group.:\nhttps://t.me/CinemaLuxe_Search_bot.</b>")
         return
+
 
     try:
         mname = message.text
